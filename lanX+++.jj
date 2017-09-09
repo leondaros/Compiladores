@@ -144,7 +144,7 @@ TOKEN :
 | < DO: "do" >
 | < SWITCH: "switch" >
 | < CASE: "case" >
-| < DEFAULT: "default" >
+| < DEFAULTT: "default" >
 | < CHAR: "char" >
 | < BOOLEAN: "boolean" >
 | < DOUBLE: "double" >
@@ -168,7 +168,7 @@ TOKEN :
 |
   < char_constant: "'" (["0"-"9"] | ["a"-"f"] | ["A"-"F"]) "'" >
 |
-  < double_constant: (<int_constant> "." [ <int_constant> [ ["e" | "E"] ["-"] <int_constant> ] ] | [<int_constant>] "." <int_constant> [["e" | "E"] ["-"] <int_constant>] ) ["D" | "d"] >
+  < double_constant: (<int_constant> "." ( <int_constant> ( ("e" | "E")? ("-")? <int_constant> )? )? | (<int_constant>)? "." <int_constant> (("e" | "E")? ("-")? <int_constant>)? ) ("D" | "d")? >
 }
 
 /* Identificadores */
@@ -247,7 +247,9 @@ SPECIAL_TOKEN :
   "\r",
 //mudancas
 //tirou \t e \f
-  ":"
+  ":",
+  "_",
+  "'"
 
 ])+>
    {
