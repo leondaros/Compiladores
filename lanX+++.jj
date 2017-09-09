@@ -168,7 +168,7 @@ TOKEN :
 |
   < char_constant: "'" (["0"-"9"] | ["a"-"f"] | ["A"-"F"]) "'" >
 |
-  < double_constant: (<int_constant> "." ( <int_constant> ( ("e" | "E")? "-"? <int_constant> )? )? | <int_constant>? "." <int_constant> (("e" | "E")? "-"? <int_constant>)? ) ("D" | "d")? >
+  < double_constant: (<int_constant> "." [ <int_constant> [ ["e" | "E"] ["-"] <int_constant> ] ] | [<int_constant>] "." <int_constant> [["e" | "E"] ["-"] <int_constant>] ) ["D" | "d"] >
 }
 
 /* Identificadores */
