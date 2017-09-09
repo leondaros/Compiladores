@@ -182,7 +182,7 @@ TOKEN :
 |
   < short_constant: ("-")? ((<DIGIT> (<DIGIT>)? (<DIGIT>)? (<DIGIT>)?) | 
                             (["1"-"2"] <DIGIT> <DIGIT> <DIGIT> <DIGIT>) |
-                            (["3"] ["0-1"] <DIGIT> <DIGIT> <DIGIT>) |
+                            (["3"] ["0"-"1"] <DIGIT> <DIGIT> <DIGIT>) |
                             (["3"] ["2"] ["0"-"6"] <DIGIT> <DIGIT>) |
                             (["3"] ["2"] ["7"] ["0"-"5"] <DIGIT>) |
                             (["3"] ["2"] ["7"] ["6"] ["0"-"7"])
@@ -190,7 +190,7 @@ TOKEN :
 |
   < long_constant: <DIGIT> (<DIGIT>)* ("l" | "L") >
 |
-  < float_constant: (<int_constant> "." ( <int_constant> ( ("e" | "E")? ("-")? <int_constant> )? )? | (<int_constant>)? "." <int_constant> (("e" | "E")? ("-")? <int_constant>)? ) ("F" | "f")?
+  < float_constant: (<int_constant> "." ( <int_constant> ( ("e" | "E")? ("-")? <int_constant> )? )? | (<int_constant>)? "." <int_constant> (("e" | "E")? ("-")? <int_constant>)? ) ("F" | "f")? >
 }
 
 /* Identificadores */
