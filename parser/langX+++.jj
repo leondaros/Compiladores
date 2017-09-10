@@ -9,7 +9,7 @@ import java.io.*;
 
 
 public class langX {
-final static String Version = "X++ Compiler - Version 1.0 - 2004";
+final static String Version = "X+++ Compiler - Version 1.0 - 2017";
 boolean Menosshort = false; // saída resumida = falso
 
 
@@ -97,7 +97,7 @@ SKIP :
 | "\t"
 | "\f"
 }
-// Acho que nao precisa tirar \f, \t
+
 SKIP :
 {
   "/*" : multilinecomment
@@ -144,10 +144,18 @@ TOKEN :
 | < DO: "do" >
 | < SWITCH: "switch" >
 | < CASE: "case" >
-| < DEFAULT: "default" >
+| < DEFAULTT: "default" >
 | < CHAR: "char" >
 | < BOOLEAN: "boolean" >
 | < DOUBLE: "double" >
+| < BYTE: "byte" >
+| < SHORT: "short" >
+| < LONG: "long" >
+| < FLOAT: "float" >
+| < FINAL: "final" >
+| < PUBLIC: "public" >
+| < PRIVATE: "private" >
+| < PROTECTED: "protected" >
 
 }
 
@@ -168,7 +176,21 @@ TOKEN :
 |
   < char_constant: "'" (["0"-"9"] | ["a"-"f"] | ["A"-"F"]) "'" >
 |
-  < double_constant: (<int_constant> "." [ <int_constant> [ ["e" | "E"] ["-"] <int_constant> ] ] | [<int_constant>] "." <int_constant> [["e" | "E"] ["-"] <int_constant>] ) ["D" | "d"] >
+  < double_constant: (<int_constant> "." ( <int_constant> ( ("e" | "E")? ("-")? <int_constant> )? )? | (<int_constant>)? "." <int_constant> (("e" | "E")? ("-")? <int_constant>)? ) ("D" | "d")? >
+| 
+  < byte_constant: ("-")? (<DIGIT> (<DIGIT>)? | ( ["1"]["0"-"1"] ["0"-"9"]) (["1"] ["0"-"2"] ["0"-"7"])) >
+|
+  < short_constant: ("-")? ((<DIGIT> (<DIGIT>)? (<DIGIT>)? (<DIGIT>)?) | 
+                            (["1"-"2"] <DIGIT> <DIGIT> <DIGIT> <DIGIT>) |
+                            (["3"] ["0"-"1"] <DIGIT> <DIGIT> <DIGIT>) |
+                            (["3"] ["2"] ["0"-"6"] <DIGIT> <DIGIT>) |
+                            (["3"] ["2"] ["7"] ["0"-"5"] <DIGIT>) |
+                            (["3"] ["2"] ["7"] ["6"] ["0"-"7"])
+  ) >
+|
+  < long_constant: <DIGIT> (<DIGIT>)* ("l" | "L") >
+|
+  < float_constant: (<int_constant> "." ( <int_constant> ( ("e" | "E")? ("-")? <int_constant> )? )? | (<int_constant>)? "." <int_constant> (("e" | "E")? ("-")? <int_constant>)? ) ("F" | "f")? >
 }
 
 /* Identificadores */
@@ -181,6 +203,7 @@ TOKEN :
 |
   < #DIGIT:["0"-"9"] >
 }
+
 
 /* Símbolos especiais */
 
@@ -215,7 +238,13 @@ TOKEN :
 | < STAR: "*" >
 | < SLASH: "/" >
 | < REM: "%" >
+//mudancas
+| < AND: "&&" >
+| < OR: "||" >
+| < XOR: "^" >
+| < NOT: "!" >
 }
+
 
 /* Trata os erros léxicos */
 SPECIAL_TOKEN :
@@ -245,9 +274,15 @@ SPECIAL_TOKEN :
   " ",
   "\n",
   "\r",
+  "\t",
+  "\f",
 //mudancas
-//tirou \t e \f
-  ":"
+  ":",
+  "_",
+  "'",
+  "|",
+  "&",
+  "^"
 
 ])+>
    {
@@ -291,6 +326,3 @@ Token t;
         } while (st != t.next);
     } while (t.kind != langXConstants.EOF);  
 }
-/* perguntas
-O que e double literal
-*/
