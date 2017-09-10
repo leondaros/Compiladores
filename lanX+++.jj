@@ -9,7 +9,7 @@ import java.io.*;
 
 
 public class langX {
-final static String Version = "X++ Compiler - Version 1.0 - 2004";
+final static String Version = "X+++ Compiler - Version 1.0 - 2017";
 boolean Menosshort = false; // saída resumida = falso
 
 
@@ -97,7 +97,7 @@ SKIP :
 | "\t"
 | "\f"
 }
-// Acho que nao precisa tirar \f, \t
+
 SKIP :
 {
   "/*" : multilinecomment
@@ -178,7 +178,7 @@ TOKEN :
 |
   < double_constant: (<int_constant> "." ( <int_constant> ( ("e" | "E")? ("-")? <int_constant> )? )? | (<int_constant>)? "." <int_constant> (("e" | "E")? ("-")? <int_constant>)? ) ("D" | "d")? >
 | 
-  < byte_constant: ("-")? (<DIGIT> (<DIGIT>)? | (["1"] ["0"-"2"] ["0"-"7"])) >
+  < byte_constant: ("-")? (<DIGIT> (<DIGIT>)? | ( ["1"]["0"-"1"] ["0"-"9"]) (["1"] ["0"-"2"] ["0"-"7"])) >
 |
   < short_constant: ("-")? ((<DIGIT> (<DIGIT>)? (<DIGIT>)? (<DIGIT>)?) | 
                             (["1"-"2"] <DIGIT> <DIGIT> <DIGIT> <DIGIT>) |
@@ -274,11 +274,15 @@ SPECIAL_TOKEN :
   " ",
   "\n",
   "\r",
+  "\t",
+  "\f",
 //mudancas
-//tirou \t e \f
   ":",
   "_",
-  "'"
+  "'",
+  "|",
+  "&",
+  "^"
 
 ])+>
    {
@@ -322,6 +326,3 @@ Token t;
         } while (st != t.next);
     } while (t.kind != langXConstants.EOF);  
 }
-/* perguntas
-O que e double literal
-*/
